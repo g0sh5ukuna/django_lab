@@ -40,12 +40,13 @@ Légende : `[ ]` à faire · `[~]` en cours · `[x]` fait · `[!]` bloqué (rais
 
 ## Phase 2 — UI Checker
 
-- [ ] **2.1** `checker/views.py` : `index()` → liste des modules
-- [ ] **2.2** `checker/views.py` : `module_detail()` → consigne (Markdown rendu) + bouton « Vérifier » (POST) + résultats
-- [ ] **2.3** Templates `base.html` / `index.html` / `module.html`, CSS embarqué, zéro JS (§5.3)
-- [ ] **2.4** Message vide si `content/modules/` ne contient aucun `.md`
+- [x] **2.1** `checker/views.py` : `index()` → liste des modules
+- [x] **2.2** `checker/views.py` : `module_detail()` → consigne (Markdown rendu) + bouton « Vérifier » (POST) + résultats
+- [x] **2.3** Templates `base.html` / `index.html` / `module.html`, CSS embarqué, zéro JS (§5.3)
+- [x] **2.4** Message vide si `content/modules/` ne contient aucun `.md` — testé via `Client()`, `GET /` → 200 + message affiché
 
 **Critère de passage Phase 2 → 3** : navigation complète dans le navigateur, d'`index.html` à un module et retour, sans erreur 500.
+✅ Validé via `Client()` Django (module factice temporaire, supprimé après test) : index liste le module → détail affiche les consignes Markdown rendues → POST « Vérifier » retourne des résultats mixtes (✅/❌) corrects → 404 propre sur slug inconnu.
 
 ---
 

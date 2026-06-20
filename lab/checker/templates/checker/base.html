@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}Django Lab{% endblock %}</title>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; color: #1a1a1a; }
+  a { color: #1d4ed8; }
+  header h1 { margin-bottom: 0; }
+  .breadcrumb { margin-bottom: 1.5rem; color: #555; }
+  .module-card { display: block; border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; text-decoration: none; color: inherit; }
+  .module-card:hover { border-color: #1d4ed8; }
+  .module-card h2 { margin: 0 0 0.25rem; font-size: 1.1rem; }
+  .module-card p { margin: 0; color: #555; }
+  button.verify { background: #1d4ed8; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+  button.verify:hover { background: #1e40af; }
+  .results { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; }
+  .results.ok { background: #ecfdf5; border: 1px solid #34d399; }
+  .results.ko { background: #fff7ed; border: 1px solid #fb923c; }
+  .check-line { margin: 0.4rem 0; }
+  .check-line.pass { color: #047857; }
+  .check-line.fail { color: #b45309; }
+  pre { background: #111827; color: #f3f4f6; padding: 0.75rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem; }
+  .empty { color: #777; font-style: italic; }
+</style>
+</head>
+<body>
+<header><h1>📚 Django Lab</h1></header>
+{% block content %}{% endblock %}
+</body>
+</html>

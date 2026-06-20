@@ -1,0 +1,13 @@
+{% extends "checker/base.html" %}
+{% block content %}
+{% if modules %}
+  {% for module in modules %}
+  <a class="module-card" href="{% url 'checker:module_detail' module.slug %}">
+    <h2>{{ module.title }}</h2>
+    <p>{{ module.description }}</p>
+  </a>
+  {% endfor %}
+{% else %}
+  <p class="empty">Ajoute des fichiers <code>.md</code> dans <code>content/modules/</code></p>
+{% endif %}
+{% endblock %}

@@ -15,6 +15,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Racine du dépôt django-lab/ (parent de lab/) — voir §4 du CDC.
+REPO_ROOT = BASE_DIR.parent
+CONTENT_MODULES_DIR = REPO_ROOT / "content" / "modules"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/

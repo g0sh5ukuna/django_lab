@@ -1,0 +1,28 @@
+{% extends "checker/base.html" %}
+{% block title %}{{ module.title }} — Django Lab{% endblock %}
+{% block content %}
+<p class="breadcrumb"><a href="{% url 'checker:index' %}">← Modules</a></p>
+<h2>{{ module.title }}</h2>
+<p>{{ module.description }}</p>
+
+{{ content_html|safe }}
+
+<form method="post">
+  {% csrf_token %}
+  <button class="verify" type="submit">🔍 Vérifier</button>
+</form>
+
+{% if results is not None %}
+<div class="results {% if all_passed %}ok{% else %}ko{% endif %}">
+  {% if all_passed %}
+    <strong>✅ Tout est bon, passe au module suivant.</strong>
+  {% else %}
+    <strong>Pas encore — voici ce qui bloque :</strong>
+  {% endif %}
+  {% for check, result in results %}
+    <p class="check-line {% if result.passed %}pass{% else %}fail{% endif %}">{{ result.message }}</p>
+    {% if result.detail %}<pre>{{ result.detail }}</pre>{% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
