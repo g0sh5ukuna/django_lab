@@ -49,7 +49,9 @@ dossier d'app répété deux fois évite les collisions de noms entre apps.
    tu sauvegardes — pas besoin de le relancer.
 4. Reviens ici et clique sur « Vérifier ».
 
-## 🎉 Et après ?
+## Et après ?
 
-Si ce module passe, tu as traversé tout le parcours MVP : projet → app →
-modèle → migration → vue/URL → template. Dis-le à ton formateur.
+Tu as maintenant le cycle complet : projet → app → modèle → migration →
+vue/URL → template. Le Module 7 te montre ce que Django offre gratuitement
+une fois ce cycle fait une première fois : une interface d'administration
+pour gérer tes données sans écrire de vue.
