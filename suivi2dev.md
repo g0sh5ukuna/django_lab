@@ -94,12 +94,20 @@ le check).
 
 - [x] **5.1** Patron validé sur Module 3 (explications + exercice
   `is_valid_title`/`is_valid_content` testé) — voir commit `0f13de2`
-- [ ] **5.2** Module Admin (nouveau, priorité demandée) — enregistrement
-  d'`Article` dans `admin.py`, explication du rôle de l'admin
-- [ ] **5.3** Module capstone (nouveau, priorité demandée) — refaire le
-  cycle complet (app → modèle → migration → vue → template) sur une
-  nouvelle app (`categories`), avec moins de détail dans les consignes,
-  pour tester la rétention
+- [x] **5.2** Module Admin (nouveau) — `da8412c`
+- [x] **5.3** Module capstone `categories` (nouveau) — `e4a7d51`. Bug
+  trouvé en le testant : `get_app_template_dirs()` de Django est mis en
+  cache au premier rendu (`functools.lru_cache`) — documenté en dépannage
+  dans le module.
+- [x] **5.3bis** (hors plan initial, demande explicite) — "interactivité
+  type IDE" recadrée après discussion : pas de terminal intégré exécutant
+  des commandes tapées par l'apprenant (casserait le modèle de confiance
+  §5.2 du CDC, gros chantier de sécurité/architecture). À la place : bouton
+  Copier + détection d'OS, JS client uniquement — `6909c5c`. A révélé un
+  bug plus large au passage : `fenced_code`/`md_in_html` n'étaient jamais
+  activés dans `markdown.markdown()`, donc tout bloc de code niché dans une
+  liste numérotée rendait mal (7 modules sur 9 touchés) — corrigé partout,
+  testé module par module + régression complète.
 - [ ] **5.4** Module 1 — explications approfondies (pas d'exercice
   pertinent, mécanique CLI)
 - [ ] **5.5** Module 2 — explications approfondies (idem)
