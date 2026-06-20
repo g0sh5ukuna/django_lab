@@ -23,15 +23,18 @@ vit à l'intérieur d'un projet.
 
 ## Consignes
 
-1. Si ce n'est pas déjà fait (Module 0), active le venv et place-toi dans
-   `workspace/`.
-2. Lance :
+**1.** Si ce n'est pas déjà fait (Module 0), active le venv et place-toi dans
+`workspace/`.
 
-   ```
-   django-admin startproject blog .
-   ```
+**2.** Lance :
 
-   Le `.` final compte : il dit à Django de créer le projet **ici**, sans
-   sous-dossier supplémentaire.
-3. Vérifie que `manage.py` et `blog/settings.py` existent.
-4. Reviens ici et clique sur « Vérifier ».
+```
+django-admin startproject blog .
+```
+
+Le `.` final compte : il dit à Django de créer le projet **ici**, sans
+sous-dossier supplémentaire.
+
+**3.** Vérifie que `manage.py` et `blog/settings.py` existent.
+
+**4.** Reviens ici et clique sur « Vérifier ».

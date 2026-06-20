@@ -86,8 +86,19 @@
   p code,li code{background:#0d1d18;border:1px solid var(--border-soft);
     padding:1px 6px;border-radius:6px;color:#cfe6dc}
   pre{background:#0c1b16;border:1px solid var(--border-soft);border-radius:var(--r);
-    padding:16px 18px;overflow:auto;margin:6px 0 16px}
+    padding:16px 18px;overflow:auto;margin:6px 0 16px;position:relative}
   pre code{background:none;border:0;padding:0;color:#cfe6dc}
+  .copy-btn{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:11px;
+    background:var(--surface-2);border:1px solid var(--border);color:var(--muted);
+    padding:4px 9px;border-radius:6px;cursor:pointer;transition:color .15s,border-color .15s}
+  .copy-btn:hover{color:var(--text);border-color:var(--brass)}
+
+  [data-os]{border:1px solid var(--border-soft);border-radius:9px;padding:10px 14px;
+    margin:8px 0;opacity:.55;transition:opacity .15s,border-color .15s}
+  [data-os].os-detected{opacity:1;border-color:var(--brass-dim);background:rgba(224,176,85,.05)}
+  [data-os].os-detected::before{content:"→ ton OS, détecté automatiquement";display:block;
+    font-family:var(--mono);font-size:11px;color:var(--brass);margin-bottom:8px}
+  [data-os] pre{margin-bottom:0}
 
   .breadcrumb{font-family:var(--mono);font-size:12px;color:var(--muted);
     text-decoration:none;display:inline-block;margin-bottom:18px}
@@ -173,5 +184,32 @@
     {% block content %}{% endblock %}
   </main>
 </div>
+<script>
+  // JS local uniquement : copier-coller et détection d'OS pour l'affichage.
+  // N'exécute rien côté serveur — voir cdc.md révisions v0.4 → v0.5.
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.content pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copier';
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(pre.textContent.trim()).then(function () {
+          btn.textContent = 'Copié !';
+          setTimeout(function () { btn.textContent = 'Copier'; }, 1500);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    var ua = navigator.userAgent || '';
+    var os = 'linux';
+    if (/Win/i.test(ua)) os = 'windows';
+    else if (/Mac/i.test(ua)) os = 'mac';
+    document.querySelectorAll('[data-os]').forEach(function (el) {
+      if (el.dataset.os.split(' ').indexOf(os) !== -1) el.classList.add('os-detected');
+    });
+  });
+</script>
 </body>
 </html>

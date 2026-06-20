@@ -22,7 +22,9 @@ def module_detail(request, slug):
     if module is None:
         raise Http404(f"Module '{slug}' introuvable")
 
-    content_html = markdown.markdown(module.content_md)
+    content_html = markdown.markdown(
+        module.content_md, extensions=["fenced_code", "md_in_html"]
+    )
 
     results = None
     if request.method == "POST":

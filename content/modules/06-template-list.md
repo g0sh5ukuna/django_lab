@@ -22,32 +22,35 @@ dossier d'app répété deux fois évite les collisions de noms entre apps.
 
 ## Consignes
 
-1. Crée `articles/templates/articles/article_list.html` :
+**1.** Crée `articles/templates/articles/article_list.html` :
 
-   ```html
-   <h1>Articles</h1>
-   <ul>
-   {% for article in articles %}
-     <li>{{ article.title }}</li>
-   {% endfor %}
-   </ul>
-   ```
+```html
+<h1>Articles</h1>
+<ul>
+{% for article in articles %}
+  <li>{{ article.title }}</li>
+{% endfor %}
+</ul>
+```
 
-2. Reviens dans `articles/views.py` et repasse à `render()` (tu avais utilisé
-   `HttpResponse` au Module 5, c'était volontaire — l'étape suivante) :
+**2.** Reviens dans `articles/views.py` et repasse à `render()` (tu avais utilisé
+`HttpResponse` au Module 5, c'était volontaire — l'étape suivante) :
 
-   ```python
-   from django.shortcuts import render
-   from .models import Article
+```python
+from django.shortcuts import render
+from .models import Article
 
-   def article_list(request):
-       articles = Article.objects.all()
-       return render(request, "articles/article_list.html", {"articles": articles})
-   ```
+def article_list(request):
+    articles = Article.objects.all()
+    return render(request, "articles/article_list.html", {"articles": articles})
+```
 
-3. Le serveur du Module 5 (`runserver 8001`) recharge automatiquement quand
-   tu sauvegardes — pas besoin de le relancer.
-4. Reviens ici et clique sur « Vérifier ».
+**3.** Le serveur du Module 5 (`runserver 8001`) recharge automatiquement quand
+tu sauvegardes — pas besoin de le relancer (sauf si tu avais déjà visité
+`/articles/` avec `render()` *avant* de créer le template : redémarre-le
+dans ce cas, Django garde en cache la liste des templates au premier essai).
+
+**4.** Reviens ici et clique sur « Vérifier ».
 
 ## Et après ?
 

@@ -1,13 +1,27 @@
 # Django Lab — Cahier des charges MVP
 
-**Version** : 0.4.0 (révision de la v0.3.0)
-**Statut** : Implémenté (Phases 0 à 3 du suivi de dev), prêt pour la Phase 4 (test apprenant réel)
+**Version** : 0.5.0 (révision de la v0.4.0)
+**Statut** : Phase 4 (test apprenant) faite de façon informelle, verdict ADJUST, Phase 5 (contenu enrichi) en cours
 **Auteur** : Omi
 **Date** : 2026-06-20
 
 ---
 
-## ⚠️ Révisions v0.3 → v0.4 (à lire en premier)
+## ⚠️ Révisions v0.4 → v0.5 (à lire en premier)
+
+Demande explicite : rendre l'outil « interactif comme un IDE », avec un
+terminal intégré où l'apprenant tape ses commandes depuis la page web,
+adapté à l'OS. **Refusé tel quel, après discussion** — voir pourquoi et ce
+qui a été fait à la place.
+
+| # | Changement | Pourquoi |
+|---|---|---|
+| 1 | **Pas de terminal intégré exécutant des commandes tapées par l'apprenant** | Casse le modèle de confiance du §5.2 : seules des commandes *écrites par le formateur dans des `.md` relus* s'exécutent aujourd'hui. Un champ texte libre exécuté côté serveur est un vecteur d'exécution de code arbitraire — risque réel même en local (port exposé, démo à quelqu'un). Construire ça proprement (sandboxing, streaming de sortie, gestion cross-platform Windows/Linux/Mac) est un projet à part entière, pas un ajustement de contenu. Le vrai terminal reste par ailleurs un objectif pédagogique explicite (§2 : « notions de terminal » est un prérequis) — le simuler dans la page web irait contre cet objectif. |
+| 2 | **JS minimal ajouté, hors du modèle de confiance** | Deux features cosmétiques, validées comme compromis : bouton « Copier » sur les blocs de code (`navigator.clipboard`), et détection de l'OS du navigateur pour mettre en avant la bonne commande d'activation du venv au Module 0 (`navigator.userAgent`). **Aucune des deux n'exécute quoi que ce soit côté serveur** — pas de nouveau vecteur de risque, juste du confort de lecture/copie. Le principe « zéro JS » du §5.3 n'est donc plus strictement vrai, mais reste vrai pour tout ce qui touche à l'exécution et à la vérification (formulaire POST classique, inchangé). |
+
+---
+
+## ⚠️ Révisions v0.3 → v0.4
 
 Trouvés en codant et testant réellement la Phase 3 (voir `suivi2dev.md`) — pas
 en relisant le texte. Les deux étaient invisibles sur le papier.
@@ -257,8 +271,11 @@ class CheckResult:
 
 ### 5.3. UI Checker (`lab/checker/`)
 
-**Technologie** : templates Django, CSS embarqué (pas de Tailwind, pas de build),
-zéro JavaScript (form POST classique).
+**Technologie** : templates Django, CSS embarqué (pas de Tailwind, pas de build).
+La vérification reste un formulaire POST classique sans JS. Depuis la v0.5,
+deux features cosmétiques utilisent un JS minimal et local (pas d'exécution
+serveur) : bouton « Copier » sur les blocs de code, détection de l'OS du
+navigateur pour le Module 0 — voir révisions v0.4 → v0.5.
 
 | Route | Template | Rôle |
 |---|---|---|

@@ -80,46 +80,47 @@ une fonction *fait* ce qu'elle doit faire. Pour vérifier un vrai
 comportement, il faut un vrai test — celui que tu vas écrire ici sert pour
 le reste du projet (Module 5 pourra réutiliser `is_valid_title`).
 
-1. Crée `articles/validators.py` avec ces deux fonctions :
+**1.** Crée `articles/validators.py` avec ces deux fonctions :
 
-   ```python
-   def is_valid_title(title):
-       """True si le titre n'est ni vide ni trop long (max 200 caractères)."""
-       return 0 < len(title) <= 200
-
-
-   def is_valid_content(content):
-       """True si le contenu n'est pas vide."""
-       return len(content) > 0
-   ```
-
-2. Colle ce test (fourni, ne l'invente pas) dans `articles/tests.py` :
-
-   ```python
-   from django.test import TestCase
-
-   from .validators import is_valid_content, is_valid_title
+```python
+def is_valid_title(title):
+    """True si le titre n'est ni vide ni trop long (max 200 caractères)."""
+    return 0 < len(title) <= 200
 
 
-   class ValidatorsTests(TestCase):
-       def test_normal_title_is_valid(self):
-           self.assertTrue(is_valid_title("Mon premier article"))
+def is_valid_content(content):
+    """True si le contenu n'est pas vide."""
+    return len(content) > 0
+```
 
-       def test_empty_title_is_invalid(self):
-           self.assertFalse(is_valid_title(""))
+**2.** Colle ce test (fourni, ne l'invente pas) dans `articles/tests.py` :
 
-       def test_too_long_title_is_invalid(self):
-           self.assertFalse(is_valid_title("x" * 201))
+```python
+from django.test import TestCase
 
-       def test_normal_content_is_valid(self):
-           self.assertTrue(is_valid_content("Un peu de texte."))
+from .validators import is_valid_content, is_valid_title
 
-       def test_empty_content_is_invalid(self):
-           self.assertFalse(is_valid_content(""))
-   ```
 
-3. Lance `python manage.py test articles` toi-même dans ton terminal —
-   c'est plus rapide que de cliquer sur « Vérifier » à chaque essai pendant
-   que tu corriges.
-4. Quand `OK` s'affiche dans ton terminal, reviens ici et clique sur
-   « Vérifier ».
+class ValidatorsTests(TestCase):
+    def test_normal_title_is_valid(self):
+        self.assertTrue(is_valid_title("Mon premier article"))
+
+    def test_empty_title_is_invalid(self):
+        self.assertFalse(is_valid_title(""))
+
+    def test_too_long_title_is_invalid(self):
+        self.assertFalse(is_valid_title("x" * 201))
+
+    def test_normal_content_is_valid(self):
+        self.assertTrue(is_valid_content("Un peu de texte."))
+
+    def test_empty_content_is_invalid(self):
+        self.assertFalse(is_valid_content(""))
+```
+
+**3.** Lance `python manage.py test articles` toi-même dans ton terminal —
+c'est plus rapide que de cliquer sur « Vérifier » à chaque essai pendant
+que tu corriges.
+
+**4.** Quand `OK` s'affiche dans ton terminal, reviens ici et clique sur
+« Vérifier ».

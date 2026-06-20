@@ -41,31 +41,34 @@ l'aies décidé toi-même.
 
 ## Consignes
 
-1. Ouvre `articles/admin.py`.
-2. Importe ton modèle et enregistre-le :
+**1.** Ouvre `articles/admin.py`.
 
-   ```python
-   from django.contrib import admin
+**2.** Importe ton modèle et enregistre-le :
 
-   from .models import Article
+```python
+from django.contrib import admin
 
-   admin.site.register(Article)
-   ```
+from .models import Article
 
-3. Crée un compte administrateur (une seule fois pour tout le projet) :
+admin.site.register(Article)
+```
 
-   ```
-   python manage.py createsuperuser
-   ```
+**3.** Crée un compte administrateur (une seule fois pour tout le projet) :
 
-   Réponds aux questions (nom d'utilisateur, email optionnel, mot de
-   passe). Retiens ces identifiants — l'outil ne les voit jamais et ne
-   peut pas te les rappeler.
-4. Avec `runserver 8001` toujours actif (Module 5), ouvre
-   `http://localhost:8001/admin/` dans ton navigateur, connecte-toi, et
-   vérifie que **Articles** apparaît — tu peux en créer un directement
-   depuis cette interface.
-5. Reviens ici et clique sur « Vérifier ».
+```
+python manage.py createsuperuser
+```
+
+Réponds aux questions (nom d'utilisateur, email optionnel, mot de
+passe). Retiens ces identifiants — l'outil ne les voit jamais et ne
+peut pas te les rappeler.
+
+**4.** Avec `runserver 8001` toujours actif (Module 5), ouvre
+`http://localhost:8001/admin/` dans ton navigateur, connecte-toi, et
+vérifie que **Articles** apparaît — tu peux en créer un directement
+depuis cette interface.
+
+**5.** Reviens ici et clique sur « Vérifier ».
 
 > Le check ne peut pas vérifier que tu t'es connecté avec succès (ton mot
 > de passe n'est jamais transmis à l'outil, par sécurité) — il vérifie que

@@ -28,16 +28,16 @@ Une migration traduit ton modèle Python en instructions SQL. Il y a deux
 
 ## Consignes
 
-1. Dans `workspace/`, génère la migration :
+**1.** Dans `workspace/`, génère la migration :
 
-   ```
-   python manage.py makemigrations articles
-   ```
+```
+python manage.py makemigrations articles
+```
 
-2. Applique-la :
+**2.** Applique-la :
 
-   ```
-   python manage.py migrate
-   ```
+```
+python manage.py migrate
+```
 
-3. Reviens ici et clique sur « Vérifier ».
+**3.** Reviens ici et clique sur « Vérifier ».

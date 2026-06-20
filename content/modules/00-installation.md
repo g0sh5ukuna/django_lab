@@ -18,10 +18,34 @@ toi-même. Sans cette étape, dès le Module 1, tes commandes `django-admin` ou
 1. Ouvre un **second terminal** (le premier fait déjà tourner l'outil sur
    `localhost:8000`, ne le ferme pas). C'est dans ce second terminal que tu
    coderas ton projet.
-2. Active le venv partagé, depuis la racine du dépôt :
-   - Linux/Mac : `source venv/bin/activate`
-   - Windows (PowerShell) : `venv\Scripts\Activate.ps1`
-   - Windows (cmd) : `venv\Scripts\activate.bat`
+2. Active le venv partagé, depuis la racine du dépôt — la commande pour ton
+   OS est mise en avant automatiquement ci-dessous :
+
+<div data-os="linux mac" markdown="1">
+
+**Linux / Mac**
+
+```
+source venv/bin/activate
+```
+
+</div>
+
+<div data-os="windows" markdown="1">
+
+**Windows** (PowerShell)
+
+```
+venv\Scripts\Activate.ps1
+```
+
+Si tu utilises l'invite de commandes (`cmd`) plutôt que PowerShell :
+
+```
+venv\Scripts\activate.bat
+```
+
+</div>
 3. Vérifie que ça a marché :
 
    ```

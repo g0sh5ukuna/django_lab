@@ -29,47 +29,48 @@ propre `urls.py`, puis on les inclut depuis `blog/urls.py`.
 
 ## Consignes
 
-1. Dans `articles/views.py`, écris une vue qui retourne le nombre d'articles
-   (pas encore de template — ça vient au Module 6) :
+**1.** Dans `articles/views.py`, écris une vue qui retourne le nombre d'articles
+(pas encore de template — ça vient au Module 6) :
 
-   ```python
-   from django.http import HttpResponse
-   from .models import Article
+```python
+from django.http import HttpResponse
+from .models import Article
 
-   def article_list(request):
-       articles = Article.objects.all()
-       return HttpResponse(f"{articles.count()} article(s)")
-   ```
+def article_list(request):
+    articles = Article.objects.all()
+    return HttpResponse(f"{articles.count()} article(s)")
+```
 
-2. Crée `articles/urls.py` :
+**2.** Crée `articles/urls.py` :
 
-   ```python
-   from django.urls import path
-   from . import views
+```python
+from django.urls import path
+from . import views
 
-   urlpatterns = [
-       path("", views.article_list, name="article_list"),
-   ]
-   ```
+urlpatterns = [
+    path("", views.article_list, name="article_list"),
+]
+```
 
-3. Dans `blog/urls.py`, ajoute `include` à l'import existant et la ligne
-   `articles/` à `urlpatterns` (ne supprime pas la ligne `admin/`) :
+**3.** Dans `blog/urls.py`, ajoute `include` à l'import existant et la ligne
+`articles/` à `urlpatterns` (ne supprime pas la ligne `admin/`) :
 
-   ```python
-   from django.urls import include, path
+```python
+from django.urls import include, path
 
-   urlpatterns = [
-       path("admin/", admin.site.urls),
-       path("articles/", include("articles.urls")),
-   ]
-   ```
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("articles/", include("articles.urls")),
+]
+```
 
-4. **Important — nouveau terminal** : ouvre un troisième terminal,
-   réactive le venv (Module 0, étape 2), `cd workspace`, puis lance :
+**4.** **Important — nouveau terminal** : ouvre un troisième terminal,
+réactive le venv (Module 0, étape 2), `cd workspace`, puis lance :
 
-   ```
-   python manage.py runserver 8001
-   ```
+```
+python manage.py runserver 8001
+```
 
-   Laisse-le tourner. C'est ce serveur que le check `http_ok` va appeler.
-5. Reviens ici et clique sur « Vérifier ».
+Laisse-le tourner. C'est ce serveur que le check `http_ok` va appeler.
+
+**5.** Reviens ici et clique sur « Vérifier ».

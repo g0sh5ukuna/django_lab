@@ -19,11 +19,12 @@ Un projet Django est composé d'« apps » : chacune gère une fonctionnalité
 
 ## Consignes
 
-1. Dans `workspace/`, lance :
+**1.** Dans `workspace/`, lance :
 
-   ```
-   python manage.py startapp articles
-   ```
+```
+python manage.py startapp articles
+```
 
-2. Ouvre `blog/settings.py` et ajoute `"articles"` à la liste `INSTALLED_APPS`.
-3. Reviens ici et clique sur « Vérifier ».
+**2.** Ouvre `blog/settings.py` et ajoute `"articles"` à la liste `INSTALLED_APPS`.
+
+**3.** Reviens ici et clique sur « Vérifier ».
