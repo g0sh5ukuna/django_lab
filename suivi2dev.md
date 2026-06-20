@@ -80,6 +80,42 @@ en suivant la consigne, je vérifie que le check passe/échoue comme attendu).
 
 ---
 
+## Phase 5 — ADJUST : contenu enrichi + nouveaux modules
+
+Réponse au retour de la Phase 4. Patron validé sur le Module 3 avant
+réplication : explications approfondies (le "pourquoi", pas que le
+"comment") + exercice interactif testé individuellement quand un module
+s'y prête (logique algorithmique, pas mécanique Django pure).
+
+**Bug trouvé en préparant l'exercice** : `manage.py test` retourne le code
+0 même quand 0 test n'a tourné — corrigé dans `validators.py` avant
+d'écrire le moindre exercice dessus (sinon "ne rien faire" aurait validé
+le check).
+
+- [x] **5.1** Patron validé sur Module 3 (explications + exercice
+  `is_valid_title`/`is_valid_content` testé) — voir commit `0f13de2`
+- [ ] **5.2** Module Admin (nouveau, priorité demandée) — enregistrement
+  d'`Article` dans `admin.py`, explication du rôle de l'admin
+- [ ] **5.3** Module capstone (nouveau, priorité demandée) — refaire le
+  cycle complet (app → modèle → migration → vue → template) sur une
+  nouvelle app (`categories`), avec moins de détail dans les consignes,
+  pour tester la rétention
+- [ ] **5.4** Module 1 — explications approfondies (pas d'exercice
+  pertinent, mécanique CLI)
+- [ ] **5.5** Module 2 — explications approfondies (idem)
+- [ ] **5.6** Module 4 — explications approfondies (makemigrations vs
+  migrate, ce qui se passe en SQL)
+- [ ] **5.7** Module 5 — explications approfondies + exercice interactif
+  possible (fonction de tri/filtre des articles, testée)
+- [ ] **5.8** Module 6 — explications approfondies (logique de template,
+  pas d'exercice Python pertinent)
+
+**Rappel** : la séance formelle Phase 4.2/4.3 (mesure réelle des
+interventions formateur) reste à faire après cette phase — c'est elle qui
+dira si l'ADJUST a vraiment résolu le problème, pas une impression.
+
+---
+
 ## Décisions ouvertes à trancher avant Phase 3 (pas avant, pas après)
 
 Reprises du §11 du CDC — ne pas les laisser traîner jusqu'à la communication publique :
