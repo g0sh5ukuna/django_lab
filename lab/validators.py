@@ -61,8 +61,8 @@ def _run_shell(command: str, cwd: str, timeout: int) -> tuple[bool, str]:
 def check_file_exists(check: Check) -> CheckResult:
     path = check.params["path"]
     if _resolve(path).exists():
-        return CheckResult(passed=True, message=f"✅ {path} trouvé")
-    return CheckResult(passed=False, message=f"❌ {check.message}", detail=f"Chemin testé : {path}")
+        return CheckResult(passed=True, message=f"{path} trouvé")
+    return CheckResult(passed=False, message=check.message, detail=f"Chemin testé : {path}")
 
 
 def check_command_passes(check: Check) -> CheckResult:
@@ -71,8 +71,8 @@ def check_command_passes(check: Check) -> CheckResult:
     timeout = check.params.get("timeout", DEFAULT_TIMEOUT)
     passed, detail = _run_shell(command, cwd, timeout)
     if passed:
-        return CheckResult(passed=True, message=f"✅ Commande réussie : {command}")
-    return CheckResult(passed=False, message=f"❌ {check.message}", detail=detail)
+        return CheckResult(passed=True, message=f"Commande réussie : {command}")
+    return CheckResult(passed=False, message=check.message, detail=detail)
 
 
 def check_contains_text(check: Check) -> CheckResult:
@@ -80,12 +80,12 @@ def check_contains_text(check: Check) -> CheckResult:
     text = check.params["text"]
     file_path = _resolve(path)
     if not file_path.exists():
-        return CheckResult(passed=False, message=f"❌ {check.message}", detail=f"Fichier introuvable : {path}")
+        return CheckResult(passed=False, message=check.message, detail=f"Fichier introuvable : {path}")
     content = file_path.read_text(encoding="utf-8")
     if text in content:
-        return CheckResult(passed=True, message=f"✅ Texte trouvé dans {path}")
+        return CheckResult(passed=True, message=f"Texte trouvé dans {path}")
     return CheckResult(
-        passed=False, message=f"❌ {check.message}", detail=f"{text!r} absent de {path}"
+        passed=False, message=check.message, detail=f"{text!r} absent de {path}"
     )
 
 
@@ -96,21 +96,21 @@ def check_http_ok(check: Check) -> CheckResult:
         response = requests.get(url, timeout=5)
     except requests.RequestException as exc:
         return CheckResult(
-            passed=False, message=f"❌ {check.message}", detail=f"Connexion impossible à {url} : {exc}"
+            passed=False, message=check.message, detail=f"Connexion impossible à {url} : {exc}"
         )
     if response.status_code != 200:
         return CheckResult(
             passed=False,
-            message=f"❌ {check.message}",
+            message=check.message,
             detail=f"Statut HTTP {response.status_code} pour {url}",
         )
     if expect_text and expect_text not in response.text:
         return CheckResult(
             passed=False,
-            message=f"❌ {check.message}",
+            message=check.message,
             detail=f"Texte attendu absent de la réponse : {expect_text!r}",
         )
-    return CheckResult(passed=True, message=f"✅ {url} répond (200)")
+    return CheckResult(passed=True, message=f"{url} répond (200)")
 
 
 def check_test_passes(check: Check) -> CheckResult:
@@ -120,8 +120,8 @@ def check_test_passes(check: Check) -> CheckResult:
     command = f"python manage.py test {test_path}"
     passed, detail = _run_shell(command, cwd, timeout)
     if passed:
-        return CheckResult(passed=True, message=f"✅ Tests réussis : {test_path}")
-    return CheckResult(passed=False, message=f"❌ {check.message}", detail=detail)
+        return CheckResult(passed=True, message=f"Tests réussis : {test_path}")
+    return CheckResult(passed=False, message=check.message, detail=detail)
 
 
 CHECK_DISPATCH = {
@@ -136,5 +136,5 @@ CHECK_DISPATCH = {
 def run_check(check: Check) -> CheckResult:
     handler = CHECK_DISPATCH.get(check.type)
     if handler is None:
-        return CheckResult(passed=False, message=f"❌ Type de check inconnu : {check.type}")
+        return CheckResult(passed=False, message=f"Type de check inconnu : {check.type}")
     return handler(check)

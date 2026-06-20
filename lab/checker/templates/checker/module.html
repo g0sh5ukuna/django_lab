@@ -1,30 +1,59 @@
 {% extends "checker/base.html" %}
 {% block title %}{{ module.title }} — Django Lab{% endblock %}
 {% block content %}
-<p class="breadcrumb"><a href="{% url 'checker:index' %}">← Modules</a></p>
-<h2>{{ module.title }}</h2>
-<p>{{ module.description }}</p>
+<a class="breadcrumb" href="{% url 'checker:index' %}">← Tous les modules</a>
+<div class="eyebrow">Module {{ module.slug|slice:":2" }}</div>
+<h1>{{ module.title }}</h1>
+<p class="lede">{{ module.description }}</p>
 
+<div class="content">
 {{ content_html|safe }}
+</div>
 
 {% if module.checks %}
-<form method="post">
-  {% csrf_token %}
-  <button class="verify" type="submit">🔍 Vérifier</button>
-</form>
-{% endif %}
+<section class="checks">
+  <form method="post">
+    {% csrf_token %}
+    <div class="top">
+      <span class="h">Vérification</span>
+      <span class="count">{{ module.checks|length }} contrôle{{ module.checks|length|pluralize }}</span>
+      <button class="btn" type="submit">Vérifier</button>
+    </div>
 
-{% if results is not None %}
-<div class="results {% if all_passed %}ok{% else %}ko{% endif %}">
-  {% if all_passed %}
-    <strong>✅ Tout est bon, passe au module suivant.</strong>
-  {% else %}
-    <strong>Pas encore — voici ce qui bloque :</strong>
-  {% endif %}
-  {% for check, result in results %}
-    <p class="check-line {% if result.passed %}pass{% else %}fail{% endif %}">{{ result.message }}</p>
-    {% if result.detail %}<pre>{{ result.detail }}</pre>{% endif %}
-  {% endfor %}
-</div>
+    {% if all_passed %}
+    <div class="banner">
+      <span class="em">✓</span>
+      <span class="t"><b>Tout est bon.</b><span>{{ module.title }} est validé.</span></span>
+      {% if next_module %}
+      <a href="{% url 'checker:module_detail' next_module.slug %}">Module suivant →</a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if results is not None %}
+    <ul class="rows">
+      {% for check, result in results %}
+      <li class="row {% if result.passed %}pass{% else %}fail{% endif %}">
+        {% if result.passed %}
+        <svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.2 2.2L16 10"/></svg>
+        {% else %}
+        <svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+        {% endif %}
+        <div class="tx">
+          <div class="t">{{ result.message }}</div>
+          <div class="ty">{{ check.type }}</div>
+          {% if not result.passed and result.detail %}
+          <div class="detail">
+            <pre>{{ result.detail }}</pre>
+          </div>
+          {% endif %}
+        </div>
+        <span class="st">{% if result.passed %}réussi{% else %}échec{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </form>
+</section>
 {% endif %}
 {% endblock %}

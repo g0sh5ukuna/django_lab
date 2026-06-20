@@ -1,13 +1,15 @@
 {% extends "checker/base.html" %}
 {% block content %}
+<div class="eyebrow">Django Lab</div>
+<h1>Apprends Django en le faisant, pas en le lisant.</h1>
+<p class="lede">Chaque module se vérifie tout seul. Code l'étape dans <code>workspace/</code>, clique sur « Vérifier », corrige ce qui bloque.</p>
+
+<div class="content">
 {% if modules %}
-  {% for module in modules %}
-  <a class="module-card" href="{% url 'checker:module_detail' module.slug %}">
-    <h2>{{ module.title }}</h2>
-    <p>{{ module.description }}</p>
-  </a>
-  {% endfor %}
+  <h2>Commence ici</h2>
+  <p><a class="breadcrumb" style="margin:0" href="{% url 'checker:module_detail' modules.0.slug %}">→ {{ modules.0.title }}</a></p>
 {% else %}
   <p class="empty">Ajoute des fichiers <code>.md</code> dans <code>content/modules/</code></p>
 {% endif %}
+</div>
 {% endblock %}
