@@ -5,6 +5,7 @@ Tous les chemins (file_exists, contains_text, cwd) sont résolus relativement
 """
 from __future__ import annotations
 
+import os
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -29,7 +30,15 @@ def _resolve(relative_path: str) -> Path:
 
 
 def _run_shell(command: str, cwd: str, timeout: int) -> tuple[bool, str]:
-    """Lance `command` dans cwd (relatif à BASE_DIR). Frontière de confiance : §5.2 du CDC."""
+    """Lance `command` dans cwd (relatif à BASE_DIR). Frontière de confiance : §5.2 du CDC.
+
+    DJANGO_SETTINGS_MODULE est retiré de l'environnement transmis : le process
+    du checker tourne avec `lab.settings` (positionné par `lab/manage.py`), et
+    cette variable, héritée telle quelle, ferait planter le `manage.py` de
+    l'apprenant (`os.environ.setdefault()` n'écrase pas une valeur déjà présente).
+    """
+    env = os.environ.copy()
+    env.pop("DJANGO_SETTINGS_MODULE", None)
     try:
         result = subprocess.run(
             command,
@@ -38,6 +47,7 @@ def _run_shell(command: str, cwd: str, timeout: int) -> tuple[bool, str]:
             timeout=timeout,
             capture_output=True,
             text=True,
+            env=env,
         )
     except subprocess.TimeoutExpired:
         return False, f"Timeout dépassé ({timeout}s) pour : {command}"

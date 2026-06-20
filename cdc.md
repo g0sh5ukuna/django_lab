@@ -1,13 +1,28 @@
 # Django Lab — Cahier des charges MVP
 
-**Version** : 0.3.0 (révision de la v0.2.0)
-**Statut** : Brouillon cadré, prêt pour décision Go/No-Go
+**Version** : 0.4.0 (révision de la v0.3.0)
+**Statut** : Implémenté (Phases 0 à 3 du suivi de dev), prêt pour la Phase 4 (test apprenant réel)
 **Auteur** : Omi
 **Date** : 2026-06-20
 
 ---
 
-## ⚠️ Révisions v0.2 → v0.3 (à lire en premier)
+## ⚠️ Révisions v0.3 → v0.4 (à lire en premier)
+
+Trouvés en codant et testant réellement la Phase 3 (voir `suivi2dev.md`) — pas
+en relisant le texte. Les deux étaient invisibles sur le papier.
+
+| # | Changement | Pourquoi |
+|---|---|---|
+| 1 | **`command_passes`/`test_passes` nettoient `DJANGO_SETTINGS_MODULE` de l'environnement transmis** | Le process du checker tourne avec `DJANGO_SETTINGS_MODULE=lab.settings` (positionné par `lab/manage.py`). Sans correctif, tout `subprocess.run()` lancé par un check hérite de cette variable, et `workspace/manage.py` ne peut pas la redéfinir (`os.environ.setdefault()` n'écrase pas une valeur déjà présente) → `ModuleNotFoundError: No module named 'lab'` dès le Module 1, pour 100% des apprenants. Repéré au premier test réel du Module 1. |
+| 2 | **Module 5 n'utilise plus `render()` vers un template** | Le Module 5 demandait un `http_ok` sur `/articles/` alors que la vue suggérée faisait `render()` vers `articles/article_list.html` — un template qui n'existe que depuis le Module 6. Résultat : 500 (`TemplateDoesNotExist`), `http_ok` ne pouvait jamais passer indépendamment du Module 6. Fix : Module 5 retourne un `HttpResponse` simple (le routage marche) ; le passage à `render()` + template devient le sujet du Module 6 (le rendu HTML marche). Cf. §8. |
+
+Ces deux bugs auraient bloqué *tous* les apprenants dès les premiers modules —
+exactement le genre de chose qu'un test sur le papier ne peut pas voir.
+
+---
+
+## ⚠️ Révisions v0.2 → v0.3
 
 Un trou du même type que les bugs corrigés en v0.1→v0.2 : non-bloquant sur le papier,
 bloquant en pratique dès le Module 1.
@@ -416,15 +431,20 @@ contient `class Article` · contient `title` · contient `content` · contient `
 `python manage.py migrate --check` passe (cwd `workspace`) · `manage.py check` passe.
 
 ### Module 5 — Vue + URL
-**Objectif** : une vue qui liste les articles, accessible par URL.
+**Objectif** : une vue accessible par URL (routage), sans template.
 **Checks** : `workspace/articles/views.py` existe · `workspace/articles/urls.py` existe ·
 `blog/urls.py` inclut `articles.urls` (`contains_text`) ·
 `http_ok` sur `http://localhost:8001/articles/`.
 **Consigne** : rappeler que si c'est un **nouveau terminal**, il faut réactiver le venv
 (Module 0, étape 2) avant de lancer `python manage.py runserver 8001`.
+> 🔧 **v0.4** : la vue retourne un `HttpResponse` simple, pas un `render()`. Un
+> `render()` vers un template qui n'existe pas encore (le Module 6 le crée)
+> renvoie 500 et empêche `http_ok` de passer — détecté en testant le module
+> en conditions réelles. Voir révisions v0.3 → v0.4.
 
 ### Module 6 — Template liste
-**Objectif** : un template HTML affichant la liste des articles.
+**Objectif** : un template HTML affichant la liste des articles ; la vue
+repasse de `HttpResponse` à `render()`.
 **Checks** : `workspace/articles/templates/articles/article_list.html` existe ·
 contient une boucle `{% for %}` (`contains_text`) ·
 `http_ok` sur `http://localhost:8001/articles/` avec `expect_text: "Articles"`.

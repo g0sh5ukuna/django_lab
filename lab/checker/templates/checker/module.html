@@ -7,10 +7,12 @@
 
 {{ content_html|safe }}
 
+{% if module.checks %}
 <form method="post">
   {% csrf_token %}
   <button class="verify" type="submit">🔍 Vérifier</button>
 </form>
+{% endif %}
 
 {% if results is not None %}
 <div class="results {% if all_passed %}ok{% else %}ko{% endif %}">

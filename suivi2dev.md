@@ -56,15 +56,16 @@ Rédaction des fichiers `.md` dans `content/modules/`, frontmatter + corps, un p
 Chaque module est testé en conditions réelles (je code le projet fil rouge moi-même
 en suivant la consigne, je vérifie que le check passe/échoue comme attendu).
 
-- [ ] **3.0** `00-installation.md` — pas de check auto, juste les instructions (Module 0, §8)
-- [ ] **3.1** `01-project-setup.md`
-- [ ] **3.2** `02-start-app.md`
-- [ ] **3.3** `03-model-article.md`
-- [ ] **3.4** `04-migrations.md`
-- [ ] **3.5** `05-view-url.md` (tester avec et sans `runserver 8001` actif pour valider le message d'erreur `http_ok`)
-- [ ] **3.6** `06-template-list.md`
+- [x] **3.0** `00-installation.md` — pas de check auto, juste les instructions (Module 0, §8). Bouton « Vérifier » masqué côté template quand `module.checks` est vide.
+- [x] **3.1** `01-project-setup.md` — fail avant / pass après testés. **Bug critique trouvé et corrigé** : `command_passes` héritait de `DJANGO_SETTINGS_MODULE=lab.settings` (positionné par le process du checker) dans le sous-processus, cassant le `manage.py` de l'apprenant (`os.environ.setdefault()` n'écrase pas une valeur déjà présente). Fix : `validators.py` retire cette variable de l'environnement transmis aux `subprocess.run()`.
+- [x] **3.2** `02-start-app.md` — fail avant / pass après testés
+- [x] **3.3** `03-model-article.md` — fail avant / pass après testés
+- [x] **3.4** `04-migrations.md` — fail avant / pass après testés
+- [x] **3.5** `05-view-url.md` — fail avant / pass après testés avec `runserver 8001` réel. **Défaut de découpage trouvé et corrigé** : le check `http_ok` du Module 5 ne pouvait jamais passer si la vue utilisait `render()` vers le template du Module 6 (pas encore créé → 500). Fix : Module 5 retourne un `HttpResponse` simple, le passage à `render()` + template devient le sujet du Module 6.
+- [x] **3.6** `06-template-list.md` — fail avant / pass après testés, y compris le rechargement automatique du serveur 8001 après modif de la vue et du template
 
 **Critère de passage Phase 3 → 4** : moi-même (ou une personne technique), en partant d'un dépôt vierge, je traverse les Modules 0 à 6 jusqu'à ✅ sur tous, sans lire le code de l'outil.
+✅ Validé — parcours complet effectué dans `workspace/` (vrai projet `blog` + app `articles`), modules 1 à 6 tous ✅ rejoués sans régression en fin de phase. **Note** : ce parcours a été fait par moi en connaissant le code de l'outil ; le test à l'aveugle avec un apprenant réel reste entièrement à faire en Phase 4 (c'est tout l'objet du gate Go/No-Go).
 
 ---
 
