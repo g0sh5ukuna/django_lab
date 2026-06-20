@@ -114,11 +114,20 @@ def check_http_ok(check: Check) -> CheckResult:
 
 
 def check_test_passes(check: Check) -> CheckResult:
+    """`manage.py test` retourne 0 même quand 0 test n'a tourné (cas d'un
+    tests.py vide ou mal nommé) — on doit le détecter nous-mêmes, sinon un
+    exercice jamais fait serait validé à tort."""
     cwd = check.params.get("cwd", ".")
     test_path = check.params["test_path"]
     timeout = check.params.get("timeout", DEFAULT_TIMEOUT)
     command = f"python manage.py test {test_path}"
     passed, detail = _run_shell(command, cwd, timeout)
+    if passed and "Ran 0 tests" in detail:
+        return CheckResult(
+            passed=False,
+            message=check.message,
+            detail=f"Aucun test n'a été exécuté (0 test trouvé).\n{detail}",
+        )
     if passed:
         return CheckResult(passed=True, message=f"Tests réussis : {test_path}")
     return CheckResult(passed=False, message=check.message, detail=detail)

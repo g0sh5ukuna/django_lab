@@ -71,12 +71,12 @@ en suivant la consigne, je vérifie que le check passe/échoue comme attendu).
 
 ## Phase 4 — Validation Go/No-Go (le vrai test)
 
-- [ ] **4.1** Trouver 1 apprenant réel correspondant au public cible (§2 du CDC : base Python, zéro Django)
-- [ ] **4.2** Séance avec l'apprenant : Module 0 encadré, puis autonomie sur 1 à 6, noter chaque intervention formateur (quoi, à quel module, pourquoi)
-- [ ] **4.3** Comparer au nombre d'interventions en formation classique sur le même parcours (référence à définir avant la séance, pas après)
-- [ ] **4.4** Trancher : GO / ADJUST / NO-GO (grille exacte en §3 du CDC)
+- [x] **4.1** Un apprenant réel a testé l'outil (hors session, pas de détail sur le profil exact ni le nombre d'interventions formateur — à compléter si dispo)
+- [ ] **4.2** Séance encadrée avec mesure formelle des interventions — **pas faite** : le retour reçu est informel, pas la séance chronométrée prévue par le protocole §3 du CDC
+- [ ] **4.3** Comparaison au nombre d'interventions en formation classique — **pas faite** (pas de séance formelle, donc pas de mesure à comparer)
+- [x] **4.4** Verdict provisoire : **ADJUST**. Retour brut de l'apprenant : *« c'est bon mais pas aussi précis/détaillé/structuré qu'un cours type [Python Docteur] ; on ne sait pas si on apprend vraiment quelque chose »*. Demande explicite : plus d'interactivité (exercices Python isolés type « écris la fonction A, puis B », vérifiés individuellement) + contenu pédagogique plus dense.
 
-**Ceci est la porte de sortie du MVP.** Pas d'étape au-delà tant que 4.4 n'est pas GO ou ADJUST.
+**Ceci est la porte de sortie du MVP.** Le verdict ADJUST autorise à retravailler le contenu — mais la séance formelle (4.2/4.3) reste à faire pour avoir une vraie mesure du gain d'autonomie, pas seulement une impression.
 
 ---
 
