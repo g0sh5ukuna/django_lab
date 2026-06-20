@@ -17,9 +17,36 @@ checks:
 
 ## Explications
 
-Un projet Django est le conteneur de ton application : configuration,
-URLs racine, point d'entrée `manage.py`. Une app (qu'on créera au Module 2)
-vit à l'intérieur d'un projet.
+### Projet vs app — la distinction qui sert pour tout le reste
+
+Un **projet** Django est le conteneur : configuration globale (`settings.py`),
+routage racine (`urls.py`), point d'entrée (`manage.py`). Une **app** (Module 2)
+est un module qui vit à l'intérieur d'un projet et gère une fonctionnalité
+précise. Un projet peut contenir plusieurs apps ; une app peut, en théorie,
+être réutilisée dans un autre projet. Retiens juste : *le projet sait où
+sont les choses, l'app sait comment une chose marche.*
+
+### Ce que `django-admin startproject blog .` crée réellement
+
+- `manage.py` — point d'entrée de toutes tes commandes (`runserver`,
+  `migrate`, `makemigrations`...). Il configure l'environnement Django puis
+  délègue à la commande demandée.
+- `blog/settings.py` — toute la configuration : base de données, apps
+  installées, fuseau horaire, etc.
+- `blog/urls.py` — la table de routage racine : quelle URL va vers quel
+  bout de code.
+- `blog/wsgi.py` / `blog/asgi.py` — le point d'entrée pour un vrai serveur
+  de production (pas utilisé en développement, `runserver` s'en charge).
+
+### Le `.` final n'est pas cosmétique
+
+`django-admin startproject blog` (sans le point) crée un dossier `blog/`
+**contenant** `manage.py` et un sous-dossier `blog/` — un niveau
+d'imbrication en trop. `django-admin startproject blog .` dit à Django
+« utilise le dossier courant comme racine » : `manage.py` atterrit
+directement dans `workspace/`. C'est ce que les checks de ce module
+attendent — si tu as oublié le point, `workspace/manage.py` n'existera pas,
+il sera un niveau plus bas.
 
 ## Consignes
 

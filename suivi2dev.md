@@ -108,15 +108,24 @@ le check).
   activés dans `markdown.markdown()`, donc tout bloc de code niché dans une
   liste numérotée rendait mal (7 modules sur 9 touchés) — corrigé partout,
   testé module par module + régression complète.
-- [ ] **5.4** Module 1 — explications approfondies (pas d'exercice
-  pertinent, mécanique CLI)
-- [ ] **5.5** Module 2 — explications approfondies (idem)
-- [ ] **5.6** Module 4 — explications approfondies (makemigrations vs
-  migrate, ce qui se passe en SQL)
-- [ ] **5.7** Module 5 — explications approfondies + exercice interactif
-  possible (fonction de tri/filtre des articles, testée)
-- [ ] **5.8** Module 6 — explications approfondies (logique de template,
-  pas d'exercice Python pertinent)
+- [x] **5.4** Module 1 — explications approfondies (projet vs app, ce que
+  `startproject` crée vraiment, pourquoi le `.` compte)
+- [x] **5.5** Module 2 — explications approfondies + piège `INSTALLED_APPS`
+  **vérifié réellement** (pas silencieux : `makemigrations articles` refuse
+  net avec `No installed app with label`, ma première version de ce texte
+  affirmait l'inverse à tort — corrigée après test)
+- [x] **5.6** Module 4 — explications approfondies, distinction vérifiée
+  entre `migrate --check` (migrations non appliquées) et
+  `makemigrations --check` (modèle non traduit en migration) — ce ne sont
+  pas la même chose, et seule la première est vérifiée automatiquement ici
+- [x] **5.7** Module 5 — explications (QuerySet paresseux) + exercice
+  interactif `sort_titles` (testé, démontre QuerySet → liste Python)
+- [x] **5.8** Module 6 — explications approfondies (pourquoi le dossier
+  d'app est répété deux fois, `{{ }}` vs `{% %}`, auto-échappement)
+
+Phase 5 terminée. Régression complète passée : les 9 modules chargent sans
+erreur, le cycle réel (projet → app → modèle → migration → vue → template
+→ admin → capstone) a été rejoué de bout en bout au fil des corrections.
 
 **Rappel** : la séance formelle Phase 4.2/4.3 (mesure réelle des
 interventions formateur) reste à faire après cette phase — c'est elle qui

@@ -17,8 +17,37 @@ checks:
 
 ## Explications
 
-Django cherche les templates dans `<app>/templates/<app>/<nom>.html` — le
-dossier d'app répété deux fois évite les collisions de noms entre apps.
+### Pourquoi le dossier d'app est répété deux fois
+
+`articles/templates/articles/article_list.html` — le nom `articles`
+apparaît deux fois, et ce n'est pas une coquille. Avec `APP_DIRS: True`
+(déjà configuré dans `blog/settings.py`), Django cherche un template par
+son chemin **relatif**, en parcourant le dossier `templates/` de chaque
+app installée. Si chaque app mettait directement `article_list.html` à la
+racine de son propre `templates/`, deux apps avec un fichier de même nom
+(par exemple `list.html` dans `articles/` et dans `categories/`) se
+marcheraient dessus — Django prendrait le premier trouvé, pas forcément
+le bon. Le sous-dossier supplémentaire (`templates/articles/...`) crée un
+espace de noms par app, comme un préfixe.
+
+### `{{ }}` vs `{% %}` — deux syntaxes, deux rôles
+
+- `{{ article.title }}` — affiche une **valeur**. `article.title` n'est
+  pas du Python : c'est le langage de template de Django, qui essaie
+  successivement un accès dict, puis attribut, puis méthode/index. Pas
+  d'accolades de méthode (`()`), pas de logique complexe possible ici —
+  volontairement limité.
+- `{% for %}` / `{% endfor %}` — une **instruction** (boucle, condition,
+  inclusion d'un autre template...). Toujours fermée par son équivalent
+  `{% end... %}`.
+
+### Tes valeurs sont échappées automatiquement
+
+Si un titre d'article contenait `<script>`, `{{ article.title }}`
+l'afficherait comme texte littéral (`&lt;script&gt;`), pas comme du HTML
+actif — Django échappe automatiquement le contenu des variables de
+template, par sécurité (ça empêche une classe d'attaques XSS). Tu n'as
+rien à faire pour ça ; c'est le comportement par défaut.
 
 ## Consignes
 
