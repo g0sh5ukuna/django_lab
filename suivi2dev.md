@@ -24,15 +24,15 @@ Légende : `[ ]` à faire · `[~]` en cours · `[x]` fait · `[!]` bloqué (rais
 
 ## Phase 1 — Moteur (loader + validateurs)
 
-- [ ] **1.1** `lab/loader.py` : dataclasses `Check` et `Module` (§5.1 du CDC)
-- [ ] **1.2** `load_modules()` : split frontmatter YAML / corps Markdown, `yaml.safe_load()`, erreur explicite si YAML mal formé
-- [ ] **1.3** `lab/validators.py` : dataclass `CheckResult` + `run_check()` dispatch
-- [ ] **1.4** Implémenter les 5 types de check un par un, avec un test manuel par type :
-  - [ ] `file_exists`
-  - [ ] `command_passes` (timeout obligatoire, défaut 30s — §5.2)
-  - [ ] `contains_text`
-  - [ ] `http_ok` (dépend de `requests`)
-  - [ ] `test_passes`
+- [x] **1.1** `lab/loader.py` : dataclasses `Check` et `Module` (§5.1 du CDC)
+- [x] **1.2** `load_modules()` : split frontmatter YAML / corps Markdown, `yaml.safe_load()`, erreur explicite si YAML mal formé — testé sur module factice (5 checks) + cas d'erreur (frontmatter absent → `ValueError` explicite)
+- [x] **1.3** `lab/validators.py` : dataclass `CheckResult` + `run_check()` dispatch
+- [x] **1.4** Implémenter les 5 types de check un par un, avec un test manuel par type :
+  - [x] `file_exists` — succès + échec testés
+  - [x] `command_passes` (timeout obligatoire, défaut 30s — §5.2) — succès, échec, timeout (1s sur `sleep 5`) testés
+  - [x] `contains_text` — succès, texte absent, fichier absent testés
+  - [x] `http_ok` (dépend de `requests`) — succès (200 + texte), texte absent, connexion refusée testés
+  - [x] `test_passes` — succès et échec testés contre un `manage.py` factice (workspace/ réel pas encore créé, Phase 3)
 
 **Critère de passage Phase 1 → 2** : un module `.md` factice avec un check de chaque type, exécuté en Python shell (sans UI), retourne les bons `CheckResult`.
 
