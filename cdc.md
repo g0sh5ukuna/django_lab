@@ -508,8 +508,8 @@ l'apprenant pull, redémarre → le module 7 apparaît.
 
 | Décision | Options | Note |
 |---|---|---|
-| **Licence open-source** | MIT (adoption max, forks peuvent fermer le code) · GPL/AGPL (force les forks à rester ouverts) | Choix structurant pour un outil pédagogique communautaire. |
-| **Nom « Django Lab »** | à conserver / à changer | ⚠️ Non vérifié : je ne peux pas confirmer sans recherche que le nom est libre sur PyPI/GitHub/marques. À vérifier avant toute communication. |
+| ~~**Licence open-source**~~ | ~~MIT vs GPL/AGPL~~ | **Tranché : MIT** (fichier `LICENSE`). Objectif explicite = adoption la plus large possible par des autodidactes, pas de protection contre les forks fermés. Cohérent avec l'écosystème Django/Python (PSF, la majorité des outils pédagogiques type Exercism). |
+| **Nom « Django Lab »** | à conserver / à changer | ⚠️ Toujours non vérifié : je ne peux pas confirmer sans recherche que le nom est libre sur PyPI/GitHub/marques. À vérifier avant toute communication publique large (pas bloquant pour un dépôt GitHub personnel). |
 | **Champ Auteur** | « Omi » (valeur du document source) | Conservé tel quel, non modifié. |
 | **`http_ok` à deux terminaux** | garder au MVP · passer au test client in-process | Friction réelle pour débutant ; voir §7. |
 

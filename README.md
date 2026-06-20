@@ -1,47 +1,71 @@
 # Django Lab
 
-Outil local d'auto-apprentissage de Django : pas un tutoriel, un **vérificateur**.
-L'apprenant code son projet dans `workspace/`, clique sur « Vérifier », et
-voit immédiatement quelles étapes sont validées.
+**Apprends Django en le faisant, pas en le lisant.**
 
-Spécification complète : [`cdc.md`](cdc.md). Avancement du développement :
-[`suivi2dev.md`](suivi2dev.md).
+Django Lab n'est pas un tutoriel de plus — c'est un **vérificateur**. Tu
+codes un vrai projet Django, étape par étape, dans ton propre éditeur et ton
+propre terminal. À chaque étape, tu cliques sur « Vérifier » et l'outil te
+dit précisément ce qui marche et ce qui bloque, avec un message d'erreur
+qui pointe vers la correction — pas juste "❌".
 
-## Démarrage rapide (formateur)
+Pas de compte à créer, pas de cloud, pas d'abonnement. Tout tourne en local,
+hors-ligne une fois installé.
+
+## Pourquoi ça existe
+
+| Tutoriel classique | Django Lab |
+|---|---|
+| Te dit quoi taper | Te dit *si tu l'as bien fait* |
+| Pas de feedback automatique | ✅ / ❌ immédiat, avec le détail technique |
+| Tu avances en espérant avoir bon | Un check qui passe = une preuve, pas une impression |
+
+## Démarrage rapide
 
 ```
-git clone <ce dépôt>
+git clone https://github.com/g0sh5ukuna/django_lab.git
 cd django_lab
-./start.sh          # Linux/Mac
+./start.sh          # Linux / Mac
 start.bat           # Windows
 ```
 
-`start.sh`/`start.bat` créent le venv, installent les dépendances, appliquent
-les migrations internes et démarrent l'UI sur **http://localhost:8000**.
+`start.sh` / `start.bat` créent un environnement virtuel Python, installent
+les dépendances, appliquent les migrations internes et démarrent l'outil sur
+**http://localhost:8000**. La toute première étape (Module 0, dans l'outil)
+t'explique comment activer ce même environnement dans un second terminal,
+celui où tu coderas ton projet — c'est la seule manipulation à comprendre
+avant de commencer.
 
-## Pour l'apprenant : un second terminal
+**Prérequis** : Python 3.10+, des notions de Python (variables, fonctions,
+classes), savoir ouvrir un terminal. Zéro Django requis — c'est le sujet.
 
-L'UI tourne sur `:8000`, mais l'apprenant code dans un **second terminal**,
-dans `workspace/`. Ce terminal doit activer le même venv pour que `django-admin`
-et `python manage.py` fonctionnent — c'est l'objet du Module 0
-(`content/modules/00-installation.md`). Sans cette activation, rien ne marche
-dès le Module 1 — voir `cdc.md` §12 si un apprenant bloque dessus.
+## Les 9 modules
 
-## Structure
+Un projet Django classique (un blog), construit de zéro, une brique à la
+fois : création du projet → app → modèle de données → migration → vue et
+URL → template HTML → interface d'administration → un dernier module sans
+aide, pour vérifier que ça reste acquis sans la béquille.
+
+Plusieurs modules incluent un exercice de code vérifié par de vrais tests
+(pas juste une recherche de texte dans ton fichier) — la preuve que ta
+fonction fait ce qu'elle doit faire, pas juste qu'elle existe.
+
+## Structure du dépôt
 
 ```
-lab/                  ← code de l'outil (UI + moteur de validation), ne pas toucher
-content/modules/       ← les 7 modules pédagogiques (.md), éditables sans toucher au code
-workspace/              ← projet Django de l'apprenant — vidé entre deux sessions
+lab/                    code de l'outil (UI + moteur de validation)
+content/modules/        les modules pédagogiques (.md), éditables sans toucher au code
+workspace/               ton projet Django — c'est ici que tu codes
 start.sh / start.bat
 requirements.txt
+cdc.md                   cahier des charges complet (architecture, choix, risques connus)
+suivi2dev.md             journal de développement (ce qui a été fait, testé, et pourquoi)
 ```
 
-## Ajouter ou modifier un module
+## Contribuer / écrire un nouveau module
 
 Un module = un fichier `.md` dans `content/modules/`, nommé `NN-slug.md`
-(le tri alphabétique fixe l'ordre pédagogique). Frontmatter YAML + corps
-Markdown :
+(le tri alphabétique fixe l'ordre). Frontmatter YAML pour les métadonnées et
+les checks, Markdown libre pour le contenu :
 
 ```markdown
 ---
@@ -54,34 +78,39 @@ checks:
 ---
 
 ## Explications
-Du Markdown libre.
+Le pourquoi, pas que le comment.
 
 ## Consignes
-1. ...
+**1.** ...
 ```
 
-Types de check disponibles : `file_exists`, `command_passes` (timeout 30s par
-défaut), `contains_text`, `http_ok`, `test_passes`. Détail des paramètres :
-`cdc.md` §7.
+Types de check disponibles : `file_exists`, `contains_text`, `command_passes`
+(commande shell, timeout 30s par défaut), `http_ok`, `test_passes` (lance les
+tests Django de l'app). Détail complet des paramètres dans `cdc.md` §7.
 
-**Frontière de confiance** : `command_passes`/`test_passes` exécutent des
-commandes shell définies dans le `.md`. Un module est donc du code de
-confiance — toute contribution externe doit être relue ligne par ligne avant
-merge (`cdc.md` §5.2).
+**Important — frontière de confiance** : `command_passes` et `test_passes`
+exécutent des commandes shell définies dans le `.md`. Un module est donc du
+code de confiance, à traiter comme un script qu'on lance — toute
+contribution externe (pull request ajoutant ou modifiant un module) doit
+être relue ligne par ligne avant merge, au même titre que du code applicatif.
 
-Après modification d'un `.md`, redémarrer le serveur de l'outil (`Ctrl+C` puis
-relancer `start.sh`) pour recharger.
+Après modification d'un `.md`, redémarre l'outil (`Ctrl+C` puis relance
+`start.sh`) pour recharger le contenu.
 
-## Avant une session avec un apprenant
+## État du projet
 
-- `workspace/` doit être vierge (seul `.gitkeep` dedans) — sinon les checks du
-  Module 1 passeront à tort.
-- Vérifier que `./start.sh` tourne et affiche bien `http://localhost:8000`.
+Honnêteté avant tout : ce dépôt a passé un développement complet (moteur,
+interface, 9 modules) testé en conditions réelles par le développeur, et un
+premier retour d'un apprenant réel a déjà fait évoluer le contenu une fois
+(verdict **ADJUST** — voir `suivi2dev.md` Phase 4-5). Il n'a **pas encore**
+été validé par une séance formelle et chronométrée avec un débutant
+complet — c'est le seul test qui dira vraiment si l'outil aide plus qu'une
+formation classique. Si tu l'essaies et que ça bloque quelque part, une
+issue avec le module concerné et ce que tu as tapé est la contribution la
+plus utile que tu puisses faire.
 
-## Le test qui compte
+## Licence
 
-Ce dépôt a passé les Phases 0 à 3 du `suivi2dev.md` : le moteur, l'UI et les
-7 modules fonctionnent, testés en conditions réelles par le développeur.
-**Il n'a pas encore été testé par un apprenant réel** — c'est la Phase 4, le
-seul test qui détermine si l'outil sert à quelque chose (grille GO/ADJUST/NO-GO
-dans `cdc.md` §3).
+[MIT](LICENSE) — utilise, modifie, redistribue, y compris commercialement.
+Pas d'obligation de republier tes modifications, une mention de la licence
+d'origine suffit.
