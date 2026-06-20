@@ -1,0 +1,4 @@
+django>=5.2,<6.0   # LTS (support jusqu'à ~2028), pas la 6.0 (feature release, hors LTS)
+pyyaml>=6.0         # parser le frontmatter des modules .md
+requests>=2.31      # checks http_ok
+markdown>=3.6        # rendu Markdown -> HTML du contenu des modules
